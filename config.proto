@@ -1,0 +1,24 @@
+encoding "utf8";
+
+TTextMinerConfig {
+	Dictionary = "dic.gzt";
+	
+	Input = {
+		
+	}
+
+	Output = {
+
+		Format = text;
+	}
+
+Articles = [
+		{ Name = "places" },
+		{ Name = "грамматика"},
+		{ Name = "people"}
+	]
+
+Facts = [
+		{ Name = "Result" }
+	]
+}
