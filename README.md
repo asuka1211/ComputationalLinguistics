@@ -5,4 +5,4 @@
 ### Ильин И.В.
 <a href="https://github.com/NihuakoNagasaki"><img src="https://avatars3.githubusercontent.com/u/50679153?s=400&v=4" alt="NihuakoNagasaki" width="50" height="50"> </a>
 ### Якушина А.Ю.
-<a href="https://github.com/AstMo" <img src="https://avatars2.githubusercontent.com/u/48390044?s=400&v=4" alt="AstMo" width="50" height="50"> </a>
+<a href="https://github.com/AstMo"> <img src="https://avatars2.githubusercontent.com/u/48390044?s=400&v=4" alt="AstMo" width="50" height="50"> </a>
