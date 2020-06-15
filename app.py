@@ -9,8 +9,13 @@ import re
 import string
 import os
 import datetime
+from pathlib import Path
+
 
 PATH1 = '/home/vagrant/models/w2v'
+PATH = '/home/vagrant/models/'
+if not os.path.exists(PATH):
+    os.makedirs(PATH)
 
 def remove_punctuation(text):
     """
@@ -38,9 +43,9 @@ def start():
         .appName("SimpleApplication") \
         .getOrCreate()
 
-    input_file = spark.sparkContext.textFile('/home/vagrant/part2kursach/samples/*.txt')
+    input_file = spark.sparkContext.wholeTextFiles('/home/vagrant/samples/*.txt')
 
-    prepared = input_file.map(lambda x: ([x])).map(lambda x: (x[0],remove_punctuation(x[0]))).map(lambda x: (x[0],remove_linebreaks(x[0])))
+    prepared = input_file.map(lambda x: (x[0],remove_linebreaks(x[1]))).map(lambda x: (x[0],remove_punctuation(x[1])))
     df = prepared.toDF()
     prepared_df = df.selectExpr('_2 as text') 
     df.show() 
@@ -71,7 +76,6 @@ def start():
 
     word2Vec = Word2Vec(vectorSize=50, inputCol='words', outputCol='result', minCount=2)
     model = word2Vec.fit(words)
-    w2v_df = model.transform(words) 
 
     today = datetime.datetime.today() 
     model_name = today.strftime("/home/vagrant/models/w2v") 

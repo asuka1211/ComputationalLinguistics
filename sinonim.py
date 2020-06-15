@@ -35,13 +35,18 @@ def get_synonyms(elements, count, model, spark_session):
 
     return result
 
-with open("places.txt", "r") as myfile:
+with open("people.txt", "r") as myfile:
     data = myfile.readlines()
     for it in data:
         it = it.replace('\n', '')    
+        print(it)
 
 for it in data:
-    it = str(it)
-    print(it + " ".join(get_synonyms(it,5,model,spark)))
+    it = it.replace('\n', '')
+    print(it)
+    for it in get_synonyms([it],5,model,spark)[0]:
+        for data in it:
+            print(data)
+    break
 
 spark.stop()
