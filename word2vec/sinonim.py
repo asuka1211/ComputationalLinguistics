@@ -44,22 +44,26 @@ with open("people.txt", "r") as myfile:
     data = myfile.readlines()
     for it in data:
         it = it.replace('\n', '')    
-        print(it)
+      
 
 for name in data:
     name = name.replace('\n', '')
     for it in get_synonyms([name],5,model,spark)[0]:
+        print(name)
+        print(it[0])
         db.Word2vecv2.insert_one({"name": name,"sinonim": it[0]}) 
 
 with open("places.txt", "r") as myfile:
     data = myfile.readlines()
     for it in data:
         it = it.replace('\n', '')    
-        print(it)
+        
 
 for name in data:
     name = name.replace('\n', '')
     for it in get_synonyms([name],5,model,spark)[0]:
+        print(name)
+        print(it[0])
         db.Word2vecv2.insert_one({"name": name,"sinonim": it[0]}) 
 
 
