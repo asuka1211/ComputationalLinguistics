@@ -1,0 +1,20 @@
+encoding "utf8";
+
+import "base.proto";
+import "articles_base.proto";
+import "fact_types.proto";
+
+TAuxDicArticle "places"
+{
+	key = { "places.txt" type=FILE  }
+}
+
+TAuxDicArticle "people"
+{
+	key = { "people.txt" type=FILE  }
+}
+
+TAuxDicArticle "грамматика"
+{
+    key = { "tomita:gramm.cxx" type=CUSTOM }
+}

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+  integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+
+ 
+  
+
+  <title>Новости 228</title>
+</head>
+
+
+<nav class="navbar navbar-light bg-light sticky-top">
+  <div class="container">
+    <a class="navbar-brand" id="loaded" href="#">0 новостей загружено</a>
+    <a class="nav-link" href="/tonality">Tonality</a>
+    <a class="nav-link" href="/sinonim">Sinonim</a>
+  </div>
+</nav>
+
+<body>
+
+  <main >
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+
+          <h1 class="display-4 mb-3">Новости 228</h1>
+
+         
+          <div id="scroller" >
+
+            
+            <template id="post_template">
+
+              <!-- template content -->
+              <div class="card mb-3" style="max-width: 1200px;">
+                <div class="row no-gutters">
+                  <div class="col-md-4" id="image">
+                    
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title" id="title"></h5>
+                      <p class="card-text" id="content"></p>
+                      <p class="card-text"><small class="text-muted" id="date"></small></p>
+                      <div id="link"></div>
+                    </div>
+                  </div>
+                </div>
+             
+
+            </template>
+
+          </div>
+
+          
+          <div class="d-flex justify-content-center mb-3" id="sentinel">
+            <div class="spinner-border" role="status"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+
+
+</body>
+<script>
+  
+var scroller = document.querySelector("#scroller");
+var template = document.querySelector('#post_template');
+var loaded = document.querySelector("#loaded");
+var sentinel = document.querySelector('#sentinel');
+
+
+var counter = 0;
+
+
+function loadItems() {
+
+
+  fetch(`/load?c=${counter}`).then((response) => {
+
+
+    response.json().then((data) => {
+
+    
+      if (!data.length) {
+
+        
+        sentinel.innerHTML = "No more posts";
+        return;
+      }
+      
+    
+      for (var i = 0; i < data.length; i++) {
+        
+      
+        let template_clone = template.content.cloneNode(true);
+        
+     
+        template_clone.querySelector("#title").innerHTML = `${data[i][0]}`;
+        template_clone.querySelector("#content").innerHTML = data[i][1];
+        template_clone.querySelector("#link").innerHTML = `<a href="${data[i][2]}" class="btn btn-primary">Источник</a>`;
+        template_clone.querySelector("#image").innerHTML = `<img src=\"${data[i][3]}\" class=\"card-img\" alt=\"\">`;
+        template_clone.querySelector("#date").innerHTML = `Дата: ${data[i][4]}`;
+
+
+     
+        scroller.appendChild(template_clone);
+
+       
+        counter += 1;
+
+        loaded.innerText = `${counter} новостей загружено`;
+
+      }
+    })
+  })
+}
+
+
+var intersectionObserver = new IntersectionObserver(entries => {
+
+
+  if (entries[0].intersectionRatio <= 0) {
+    return;
+  }
+
+
+  loadItems();
+
+});
+
+
+intersectionObserver.observe(sentinel);
+</script>
+</html>
