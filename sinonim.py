@@ -9,6 +9,8 @@ from pprint import pprint
 import re
 import os
 import datetime
+import pymongo
+from pymongo import MongoClient
 
 PATH1 = '/home/vagrant/models/w2v'
 
@@ -19,6 +21,9 @@ spark = SparkSession \
 
 model = Word2VecModel.load(PATH1)
 
+client = MongoClient(
+    "mongodb+srv://Admin:12345@db1-9o4za.mongodb.net/db1?retryWrites=true&w=majority")
+db = client.newsDB
 
 def get_synonyms(elements, count, model, spark_session):
     result = []
@@ -41,12 +46,21 @@ with open("people.txt", "r") as myfile:
         it = it.replace('\n', '')    
         print(it)
 
-for it in data:
-    it = it.replace('\n', '')
-    print(it)
-    for it in get_synonyms([it],5,model,spark)[0]:
-        for data in it:
-            print(data)
-    break
+for name in data:
+    name = name.replace('\n', '')
+    for it in get_synonyms([name],5,model,spark)[0]:
+        db.Word2vecv2.insert_one({"name": name,"sinonim": it[0]}) 
+
+with open("places.txt", "r") as myfile:
+    data = myfile.readlines()
+    for it in data:
+        it = it.replace('\n', '')    
+        print(it)
+
+for name in data:
+    name = name.replace('\n', '')
+    for it in get_synonyms([name],5,model,spark)[0]:
+        db.Word2vecv2.insert_one({"name": name,"sinonim": it[0]}) 
+
 
 spark.stop()
