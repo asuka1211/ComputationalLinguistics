@@ -19,4 +19,4 @@ SecretStorage==2.3.1
 selenium==3.141.0
 six==1.11.0
 soupsieve==1.9.6
-urllib3==1.25.9
+urllib3==1.26.5
